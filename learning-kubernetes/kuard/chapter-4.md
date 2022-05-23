@@ -117,3 +117,21 @@ You can also copy files to and from a container using the `cp` command:
     kubectl cp <pod-name>:</path/to/remote/file> </ath/to/local/file>
 
 This will copy a file from a running container to your local machine.  You can specify directories or reverse the syntax to copy a file from your local machine back out to the container.
+
+If you want to access your Pod via the network, you can use the `port-forward` command to forward network traffic from the local machine to the Pod.  This enables you to securely tunnel network traffic through to containers that might not be exposed anywhere on the public network:
+
+    kubectl port-forward <pod-name> 8080:80
+
+This opens a connection that forwards traffic from the local machine on port 8080 to the remote container on port 80.
+
+You can also use the `port-forward` command with services by specifying `services/<service-name>` instead of `<pod-name>`.  But note that if you do port-forward to a service, the requests will only be forwarded to a single Pod on that service. The ywill not go through the service load balancer.
+
+If you want to see how your cluster is using resources, you can use the `top` command. For example, to see the CPU and memory usage by the nodes:
+
+    kubectl top nodes
+
+and for Pods:
+
+    kubectl top pods
+
+and you can see in all namespaces using `--all-namespaces` flag.
